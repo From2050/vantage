@@ -1,0 +1,56 @@
+# Vantage — API reference for AI agents
+
+Vantage is a local-first, skill-and-experience-centric career strategy tool. The user's durable
+asset is their skill portfolio, evidenced by experience entries. Market data (job descriptions) is
+reference input — never a mold. Base URL: http://localhost:3000 (default).
+
+## The core agent flow (spends NO Vantage tokens)
+
+1. Fetch an assembled analysis context (`contextOnly: true`) — you get `{ system, prompt, meta }`.
+2. Reason over it with YOUR OWN model.
+3. Write the result back via the endpoint named in `meta.writeBack`. It appears in the app UI,
+   marked as agent-sourced.
+
+An MCP server wrapping this API ships in the repo (`mcp/` — stdio; env `VANTAGE_URL`).
+
+## Constraints you must respect
+
+- The user is the sole authority on their experience. NEVER invent, embellish, or upgrade facts,
+  verbs, metrics, or ownership when creating/updating entries or writing analyses.
+- Analyses must reason FROM the user's skills outward; treat market data as validation signal.
+
+## Endpoints
+
+### Evidence base (entries)
+- GET    /api/entries                 → Entry[] (id, title, type: work|education|project|activity, organization, dateFrom, dateTo, rawNotes, refinedNarrative, keyHighlights[], tags[])
+- POST   /api/entries                 { title, type, organization?, dateFrom?, dateTo?, rawNotes?, refinedNarrative?, keyHighlights?, tags? } → Entry (dates optional: "YYYY" | "YYYY-MM" | dateTo "present")
+- GET    /api/entries/:id             → Entry
+- PATCH  /api/entries/:id             partial Entry → Entry
+- DELETE /api/entries/:id             → 204
+
+### Skill portfolio (first-class, evidence-linked)
+- GET    /api/skills                  → Skill[] { id, name, category: technical|tool|domain|soft, evidence: [{ entryId, weight }] } — weight 3=core, 2=supporting, 1=mentioned
+- POST   /api/ai/extract-skills       → re-extract portfolio from all entries (uses Vantage's configured model; preserves user curation)
+- PATCH  /api/skills/:id              { name?, category? }
+- DELETE /api/skills/:id              → 204
+- POST   /api/skills/merge            { fromId, toId } → 204
+
+### Goals, profile, market data
+- GET/PUT /api/goals                  { visionText, limitsText, identityText, aiSummary }
+- GET/PUT /api/profile                { fullName, headline, email, phone, location, links[] }
+- GET    /api/jd-sessions             → JDSession[] { id, filename, digest: { summary, keywords[], requirements[], niceToHave[], roleLevel, context } }
+- POST   /api/jd-sessions             multipart form (file: PDF, or text field) → creates session + digest
+
+### Analysis contexts (contextOnly — no LLM call, for agents)
+- POST /api/ai/skill-analysis         { contextOnly: true } → { system, prompt, meta }
+- POST /api/ai/paths                  { mode: positioning|adjacent|roadmap, contextOnly: true, target?, jdSessionId? } → { system, prompt, meta }
+  (without contextOnly these endpoints stream text using Vantage's configured model)
+
+### Write-back
+- POST /api/analyses                  { kind: skill|positioning|adjacent, content: markdown, source: "agent" } → shown on dashboard
+- GET  /api/analyses?kind=…&latest=1  → latest analysis of a kind
+- POST /api/path-plans                { targetRole, content: markdown } → shown in Paths page
+- GET  /api/path-plans                → saved roadmaps
+
+### Misc
+- GET /api/ai/capabilities            → { name, webSearch, jsonSchema, tier } of the app's active provider
