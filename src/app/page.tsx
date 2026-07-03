@@ -8,7 +8,7 @@ import { APP_NAME, USER_ID } from '@/lib/constants';
 import type { SkillCategory } from '@/types';
 import SkillAnalysis from '@/components/dashboard/SkillAnalysis';
 import SkillPortfolio from '@/components/dashboard/SkillPortfolio';
-import RadarChart from '@/components/dashboard/RadarChart';
+import RadarPanel from '@/components/dashboard/RadarPanel';
 import SkillTimeline from '@/components/dashboard/SkillTimeline';
 
 export const dynamic = 'force-dynamic';
@@ -35,7 +35,7 @@ export default function Dashboard() {
     .map((s) => ({ skill: s, strength: strengthOf(s, entries) }))
     .sort((a, b) => b.strength.score - a.strength.score);
 
-  // Radar: top 6 skills as game-stat axes.
+  // Radar lens 1: top 6 skills as game-stat axes.
   const radarAxes = scored.slice(0, 6).map(({ skill, strength }) => ({
     label: skill.name,
     value: strength.score / 100,
@@ -53,6 +53,21 @@ export default function Dashboard() {
   }
   const strongestCategory =
     [...massByCategory.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+
+  // Radar lens 2: category balance (mass = summed strength per category, normalized).
+  const maxMass = Math.max(1, ...massByCategory.values());
+  const categoryAxes = [...massByCategory.entries()].map(([cat, mass]) => {
+    const top = scored
+      .filter((s) => s.skill.category === cat)
+      .slice(0, 3)
+      .map((s) => s.skill.name)
+      .join(', ');
+    return {
+      label: CATEGORY_LABEL[cat],
+      value: mass / maxMass,
+      hint: `${CATEGORY_LABEL[cat]} — total strength ${Math.round(mass)}. Top: ${top}`,
+    };
+  });
 
   const latestEvidence = entries
     .map((e) => e.updatedAt)
@@ -98,7 +113,7 @@ export default function Dashboard() {
       <div className="grid items-center gap-6 rounded-xl border border-black/10 bg-surface p-6 dark:border-white/10 lg:grid-cols-[minmax(280px,360px)_1fr]">
         <div className="flex justify-center">
           {radarAxes.length >= 3 ? (
-            <RadarChart axes={radarAxes} />
+            <RadarPanel skillAxes={radarAxes} categoryAxes={categoryAxes} />
           ) : (
             <p className="p-8 text-center text-sm text-foreground/50">
               Extract at least 3 skills to see your radar.

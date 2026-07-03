@@ -116,6 +116,19 @@ export default function PathsPage() {
     setPlans((prev) => prev.filter((p) => p.id !== id));
   }
 
+  // Guided flow: suggest the next step without gating anything.
+  const nextStep = !positioning ? 1 : !adjacent ? 2 : plans.length === 0 && !roadmap ? 3 : 0;
+  const stepBadge = (step: number, done: boolean) =>
+    done ? (
+      <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-600 dark:text-emerald-400">
+        ✓ done
+      </span>
+    ) : nextStep === step ? (
+      <span className="rounded-full bg-[var(--accent)]/10 px-2 py-0.5 text-[10px] font-medium text-[var(--accent)]">
+        suggested next
+      </span>
+    ) : null;
+
   const searchToggle = (checked: boolean, onChange: (b: boolean) => void) => (
     <label
       className={`flex items-center gap-1.5 text-xs ${canSearch ? 'text-foreground/60' : 'text-foreground/30'}`}
@@ -144,7 +157,9 @@ export default function PathsPage() {
       <section>
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-medium">1 · Where you stand</h2>
+            <h2 className="flex items-center gap-2 text-sm font-medium">
+              1 · Where you stand {stepBadge(1, !!positioning)}
+            </h2>
             <p className="mt-0.5 text-xs text-foreground/50">
               What your current composition says — center of gravity, distinctive combinations, evidence strength.
             </p>
@@ -164,7 +179,9 @@ export default function PathsPage() {
       <section>
         <div className="flex items-center justify-between gap-3">
           <div>
-            <h2 className="text-sm font-medium">2 · Adjacent paths</h2>
+            <h2 className="flex items-center gap-2 text-sm font-medium">
+              2 · Adjacent paths {stepBadge(2, !!adjacent)}
+            </h2>
             <p className="mt-0.5 text-xs text-foreground/50">
               Directions reachable with a composition like yours — including ones you haven&apos;t considered.
             </p>
@@ -187,7 +204,9 @@ export default function PathsPage() {
 
       {/* 3. Roadmap */}
       <section>
-        <h2 className="text-sm font-medium">3 · Build toward a target</h2>
+        <h2 className="flex items-center gap-2 text-sm font-medium">
+          3 · Build toward a target {stepBadge(3, plans.length > 0 || !!roadmap)}
+        </h2>
         <p className="mt-0.5 text-xs text-foreground/50">
           Gap analysis and a staged build order — each step produces evidence for your Story Bank.
         </p>

@@ -8,6 +8,19 @@ see your skill composition clearly, and plan strategy from it. Job applications 
 cover letters) are one *application* of the core; market data (job descriptions) is *reference to
 validate direction* — never a mold to squeeze yourself into.
 
+![Dashboard — skill portfolio with strength levels, radar, and persisted analysis](docs/images/dashboard.png)
+
+<details>
+<summary>More screenshots — Paths (strategy) & Settings (bring your own model)</summary>
+
+![Paths — positioning, adjacent paths, and skill-building roadmaps](docs/images/paths.png)
+
+![Settings — Gemini, local Ollama, or any OpenAI-compatible endpoint](docs/images/settings.png)
+
+</details>
+
+*(Screenshots show a fictional demo profile.)*
+
 ## What it does
 
 - **Story Bank** — your evidence library. One entry per experience (work / education / project /
