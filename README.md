@@ -102,6 +102,15 @@ Next.js (App Router) + React + TypeScript + Tailwind. SQLite + Drizzle ORM (Post
 schema). Provider-abstracted AI layer (`src/lib/ai/provider/`). No component library, no chart
 library — pure SVG visualizations.
 
+## Contributing & AI-assisted development
+
+This project is built to be developed *with* AI coding agents. Whether you're human or a model
+(Codex, Claude Code, Cursor, …), **start by reading [AGENTS.md](AGENTS.md)** — it carries the
+product's design filter, hard rules, and conventions. Deeper references:
+[docs/decisions.md](docs/decisions.md) (why things are the way they are),
+[docs/ai-contracts.md](docs/ai-contracts.md) (prompt standards),
+[docs/verification.md](docs/verification.md) (runnable quality gates).
+
 ## License
 
 MIT
