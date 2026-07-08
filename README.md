@@ -47,6 +47,11 @@ npm run db:push        # creates local SQLite (db.sqlite)
 npm run dev            # http://localhost:3000
 ```
 
+**See it working in 30 seconds — no data entry, no API key:** open the dashboard and click
+**✨ Try with demo data** (or run `npm run db:seed`). A fictional profile populates the radar,
+skill portfolio, and analysis so you can explore before adding your own. Connect a model in
+**Settings** when you want to run the AI features on your own experience.
+
 Open **Settings** in the app and connect a model. Everything is stored locally (SQLite, gitignored).
 
 ## Bring your own model

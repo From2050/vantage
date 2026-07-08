@@ -109,15 +109,19 @@ npx tsc --noEmit && npm run build
 
 ## Demo-data screenshot procedure (public assets — never real data)
 
+The demo persona is `src/lib/demo/persona.json`; seed it with `npm run db:seed` (or the in-app
+"Try with demo data" button on an empty dashboard).
+
 ```bash
 cp db.sqlite /tmp/vantage-real-backup.db          # 1. back up the real DB
-node scripts-or-inline-seed                        # 2. wipe tables, seed fictional persona
-#   (see git history of docs/images for the "Riley Park" seed shape: entries + weighted skills
-#    + one analysis + goals + profile; keep it fictional and coherent)
-# 3. RESTART the dev server — it holds the old file inode and will serve stale data otherwise
+npm run db:seed                                    # 2. replace with the fictional persona
+# 3. RESTART the dev server (or start it now); it caches the DB — stale reads otherwise
 # 4. capture (puppeteer-core with system Chrome, deviceScaleFactor 2, dark scheme) → docs/images/
-cp /tmp/vantage-real-backup.db db.sqlite           # 5. restore
-# 6. RESTART the dev server again; verify /api/entries returns the real data
+# 5. RESTORE — CRITICAL, SQLite WAL trap:
+#    Stop the dev server FIRST, then clear the WAL, THEN copy back. Copying only db.sqlite
+#    while the server runs leaves demo writes in db.sqlite-wal and they reappear on next read.
+#    (stop server) && rm -f db.sqlite-wal db.sqlite-shm && cp /tmp/vantage-real-backup.db db.sqlite
+# 6. Verify with a FRESH connection: node -e "…SELECT count(*) FROM entries" shows the real count.
 ```
 
 ## Change → gate mapping

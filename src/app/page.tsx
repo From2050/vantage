@@ -10,6 +10,7 @@ import SkillAnalysis from '@/components/dashboard/SkillAnalysis';
 import SkillPortfolio from '@/components/dashboard/SkillPortfolio';
 import RadarPanel from '@/components/dashboard/RadarPanel';
 import SkillTimeline from '@/components/dashboard/SkillTimeline';
+import DemoDataButton from '@/components/dashboard/DemoDataButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -100,13 +101,26 @@ export default function Dashboard() {
         </p>
       </div>
 
-      {/* Setup nudges */}
-      {(!profileComplete || !goalsStarted || entries.length === 0) && (
-        <div className="flex flex-wrap gap-2 text-sm">
-          {entries.length === 0 && <Nudge href="/story-bank" text="Add your first experience →" />}
-          {!profileComplete && <Nudge href="/profile" text="Complete your profile →" />}
-          {!goalsStarted && <Nudge href="/goals" text="Define your goals & values →" />}
+      {/* First-run: offer demo data so the app is immediately explorable */}
+      {entries.length === 0 ? (
+        <div className="rounded-xl border border-[var(--accent)]/25 bg-[var(--accent)]/[.06] p-5">
+          <p className="text-sm font-medium">New here? See it working in one click.</p>
+          <p className="mt-1 text-sm text-foreground/60">
+            Load a fictional demo profile to explore the dashboard, skill portfolio, and Paths — or
+            start adding your own experience.
+          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
+            <DemoDataButton />
+            <Nudge href="/story-bank" text="Add your first experience →" />
+          </div>
         </div>
+      ) : (
+        (!profileComplete || !goalsStarted) && (
+          <div className="flex flex-wrap gap-2 text-sm">
+            {!profileComplete && <Nudge href="/profile" text="Complete your profile →" />}
+            {!goalsStarted && <Nudge href="/goals" text="Define your goals & values →" />}
+          </div>
+        )
       )}
 
       {/* Hero: radar + stats */}

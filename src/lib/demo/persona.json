@@ -1,0 +1,140 @@
+{
+  "_note": "Fictional demo profile used to let first-time users see a populated app in one click. Not a real person.",
+  "entries": [
+    {
+      "id": "demo-e1",
+      "title": "Robotics Software Engineer",
+      "type": "work",
+      "organization": "Nova Dynamics",
+      "dateFrom": "2023-04",
+      "dateTo": "present",
+      "rawNotes": "",
+      "refinedNarrative": "I own the motion-planning stack for warehouse autonomous mobile robots. I built the ROS2 planning nodes in C++ and Python, and profiling work I led cut planner latency by 35%. I also contributed to the fleet telemetry pipeline that surfaces failures across the deployment.",
+      "keyHighlights": [
+        "Built ROS2 motion-planning nodes in C++/Python",
+        "Cut planner latency 35% through profiling",
+        "Contributed to fleet telemetry pipeline"
+      ],
+      "tags": ["ROS2", "C++", "Python", "Motion Planning", "Telemetry"]
+    },
+    {
+      "id": "demo-e2",
+      "title": "Embedded Engineer",
+      "type": "work",
+      "organization": "Kite Labs",
+      "dateFrom": "2020-06",
+      "dateTo": "2023-03",
+      "rawNotes": "",
+      "refinedNarrative": "I wrote firmware for consumer drones: sensor-fusion routines, failsafe logic, and an over-the-air update system that shipped to roughly 200k devices. I supported the failsafe certification testing effort.",
+      "keyHighlights": [
+        "Shipped sensor-fusion firmware for consumer drones",
+        "Designed an OTA update system reaching ~200k devices",
+        "Supported failsafe certification testing"
+      ],
+      "tags": ["Embedded C", "Sensor Fusion", "RTOS", "OTA"]
+    },
+    {
+      "id": "demo-e3",
+      "title": "B.S. Computer Engineering",
+      "type": "education",
+      "organization": "State University",
+      "dateFrom": "2016-09",
+      "dateTo": "2020-06",
+      "rawNotes": "",
+      "refinedNarrative": "Focused on embedded systems and control theory. Capstone project was an autonomous rover with vision-based navigation.",
+      "keyHighlights": [
+        "Capstone: autonomous rover navigation",
+        "Control theory specialization"
+      ],
+      "tags": ["Control Theory", "Embedded Systems"]
+    },
+    {
+      "id": "demo-e4",
+      "title": "OpenSwarm (open source)",
+      "type": "project",
+      "organization": "",
+      "dateFrom": "2024-02",
+      "dateTo": "present",
+      "rawNotes": "",
+      "refinedNarrative": "I maintain a multi-robot simulation library in Python with 800+ GitHub stars. I built the physics-accurate swarm simulator and review community pull requests each week.",
+      "keyHighlights": [
+        "Maintainer of a Python swarm simulator, 800+ stars",
+        "Built the physics-accurate simulation core",
+        "Review community PRs weekly"
+      ],
+      "tags": ["Python", "Simulation", "Open Source"]
+    },
+    {
+      "id": "demo-e5",
+      "title": "ML Study Group Lead",
+      "type": "activity",
+      "organization": "Community College",
+      "dateFrom": "2024-09",
+      "dateTo": "present",
+      "rawNotes": "",
+      "refinedNarrative": "I run a weekly applied-ML study group and built the PyTorch training pipelines we use on rented GPUs for hands-on sessions.",
+      "keyHighlights": [
+        "Run a weekly applied-ML study group",
+        "Built PyTorch training pipelines on rented GPUs"
+      ],
+      "tags": ["PyTorch", "Teaching", "MLOps"]
+    }
+  ],
+  "skills": [
+    { "id": "demo-s1", "name": "Motion Planning", "category": "technical" },
+    { "id": "demo-s2", "name": "Embedded Firmware", "category": "technical" },
+    { "id": "demo-s3", "name": "Sensor Fusion", "category": "technical" },
+    { "id": "demo-s4", "name": "Robotics Simulation", "category": "technical" },
+    { "id": "demo-s5", "name": "Control Theory", "category": "technical" },
+    { "id": "demo-s6", "name": "ML Training Pipelines", "category": "technical" },
+    { "id": "demo-s7", "name": "C++", "category": "tool" },
+    { "id": "demo-s8", "name": "Python", "category": "tool" },
+    { "id": "demo-s9", "name": "ROS2", "category": "tool" },
+    { "id": "demo-s10", "name": "PyTorch", "category": "tool" },
+    { "id": "demo-s11", "name": "Warehouse Robotics", "category": "domain" },
+    { "id": "demo-s12", "name": "Consumer Drones", "category": "domain" },
+    { "id": "demo-s13", "name": "Open-source Maintainership", "category": "soft" },
+    { "id": "demo-s14", "name": "Technical Teaching", "category": "soft" }
+  ],
+  "entrySkills": [
+    { "entryId": "demo-e1", "skillId": "demo-s1", "weight": 3 },
+    { "entryId": "demo-e1", "skillId": "demo-s4", "weight": 2 },
+    { "entryId": "demo-e1", "skillId": "demo-s5", "weight": 1 },
+    { "entryId": "demo-e1", "skillId": "demo-s7", "weight": 3 },
+    { "entryId": "demo-e1", "skillId": "demo-s8", "weight": 2 },
+    { "entryId": "demo-e1", "skillId": "demo-s9", "weight": 3 },
+    { "entryId": "demo-e1", "skillId": "demo-s11", "weight": 2 },
+    { "entryId": "demo-e2", "skillId": "demo-s2", "weight": 3 },
+    { "entryId": "demo-e2", "skillId": "demo-s3", "weight": 3 },
+    { "entryId": "demo-e2", "skillId": "demo-s12", "weight": 3 },
+    { "entryId": "demo-e3", "skillId": "demo-s2", "weight": 2 },
+    { "entryId": "demo-e3", "skillId": "demo-s5", "weight": 3 },
+    { "entryId": "demo-e4", "skillId": "demo-s4", "weight": 3 },
+    { "entryId": "demo-e4", "skillId": "demo-s8", "weight": 3 },
+    { "entryId": "demo-e4", "skillId": "demo-s13", "weight": 3 },
+    { "entryId": "demo-e5", "skillId": "demo-s6", "weight": 2 },
+    { "entryId": "demo-e5", "skillId": "demo-s10", "weight": 2 },
+    { "entryId": "demo-e5", "skillId": "demo-s14", "weight": 3 }
+  ],
+  "goals": {
+    "visionText": "Build robots that do useful physical work. Stay hands-on with systems; avoid pure management for now.",
+    "limitsText": "No more than 20% travel. Remote-friendly teams only.",
+    "identityText": "A systems engineer who likes owning problems end-to-end, from firmware to fleet."
+  },
+  "profile": {
+    "fullName": "Riley Park",
+    "headline": "Robotics Software Engineer",
+    "email": "riley@example.dev",
+    "phone": "",
+    "location": "Portland, OR",
+    "links": ["github.com/rileypark"]
+  },
+  "analyses": [
+    {
+      "id": "demo-a1",
+      "kind": "skill",
+      "source": "app",
+      "content": "## Skill clusters\n\n- **Robotics core** — Motion Planning, ROS2, Robotics Simulation. Deepest cluster, evidenced by \"Robotics Software Engineer\" and \"OpenSwarm\".\n- **Embedded foundations** — Embedded Firmware, Sensor Fusion, Control Theory (\"Embedded Engineer\", capstone).\n- **Emerging ML thread** — ML Training Pipelines, PyTorch (\"ML Study Group Lead\") — recent but thin.\n\n## Strengths\n\n- Production robotics with a measurable result (35% planner latency reduction).\n- A rare pairing: shipped firmware to ~200k devices **and** maintains a popular open-source simulator.\n\n## Gaps & thin spots\n\n- ML evidence is study-group level, not production. One deployed ML feature would change this materially.\n\n## Suggested directions\n\n1. **Well-evidenced now**: Senior robotics software roles.\n2. **Needs development**: ML infrastructure for robotics — bridge the two strong clusters with one production ML project."
+    }
+  ]
+}

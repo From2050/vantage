@@ -48,6 +48,7 @@ strength) → **Paths** (positioning / adjacent paths / roadmaps — the strateg
 ```bash
 npm run dev        # localhost:3000 (Turbopack)
 npm run db:push    # push Drizzle schema to local db.sqlite
+npm run db:seed    # load the fictional demo persona (src/lib/demo/persona.json) — REPLACES data
 npm run db:studio  # DB browser
 npx tsc --noEmit   # typecheck — run after every change
 npm run build      # production build — run before committing significant work
