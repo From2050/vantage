@@ -46,6 +46,13 @@ export default function PathsPage() {
   const [rmJd, setRmJd] = useState('');
   const [rmSearch, setRmSearch] = useState(true);
   const [rmSaved, setRmSaved] = useState(false);
+  // Framework-grounded calibration
+  const [valueChain, setValueChain] = useState('');
+  const [vcLoading, setVcLoading] = useState(false);
+  const [vcJd, setVcJd] = useState('');
+  const [vcSearch, setVcSearch] = useState(false);
+  const [abilityCore, setAbilityCore] = useState('');
+  const [acLoading, setAcLoading] = useState(false);
 
   useEffect(() => {
     fetch('/api/ai/capabilities').then((r) => r.json()).then((c) => setCanSearch(!!c.webSearch)).catch(() => {});
@@ -60,13 +67,21 @@ export default function PathsPage() {
       .then((r) => r.json())
       .then((a) => a && setAdjacent(a.content))
       .catch(() => {});
+    fetch('/api/analyses?kind=value-chain&latest=1')
+      .then((r) => r.json())
+      .then((a) => a && setValueChain(a.content))
+      .catch(() => {});
+    fetch('/api/analyses?kind=ability-core&latest=1')
+      .then((r) => r.json())
+      .then((a) => a && setAbilityCore(a.content))
+      .catch(() => {});
   }, []);
 
   async function run(
     body: Record<string, unknown>,
     setText: (s: string) => void,
     setLoading: (b: boolean) => void,
-    persistKind?: 'positioning' | 'adjacent',
+    persistKind?: 'positioning' | 'adjacent' | 'value-chain' | 'ability-core',
   ) {
     setLoading(true);
     setError('');
@@ -248,6 +263,66 @@ export default function PathsPage() {
           )}
         </div>
         <StreamBox text={roadmap} loading={rmLoading} />
+      </section>
+
+      {/* Framework-grounded calibration */}
+      <section className="rounded-xl border border-[var(--accent)]/20 bg-[var(--accent)]/[.04] p-5">
+        <h2 className="text-sm font-medium">Framework calibration</h2>
+        <p className="mt-0.5 text-xs text-foreground/55">
+          Your evidence run through named career lenses — not freeform. Value-chain positioning shows
+          where your evidence places you and your pricing power; ability core separates knowledge,
+          skills, and the strengths that repeat across your experience.
+        </p>
+
+        {/* Value chain */}
+        <div className="mt-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h3 className="text-sm font-medium">Value-chain positioning</h3>
+            <div className="flex items-center gap-3">
+              {sessions.length > 0 && (
+                <select className={inputCls} value={vcJd} onChange={(e) => setVcJd(e.target.value)}>
+                  <option value="">No JD reference</option>
+                  {sessions.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      JD: {s.filename || s.digest.summary.slice(0, 40)}
+                    </option>
+                  ))}
+                </select>
+              )}
+              {searchToggle(vcSearch, setVcSearch)}
+              <button
+                className={btn}
+                disabled={vcLoading}
+                onClick={() =>
+                  run(
+                    { mode: 'value-chain', jdSessionId: vcJd || undefined, useWebSearch: vcSearch },
+                    setValueChain,
+                    setVcLoading,
+                    'value-chain',
+                  )
+                }
+              >
+                {vcLoading ? 'Analyzing…' : valueChain ? 'Re-run' : 'Analyze'}
+              </button>
+            </div>
+          </div>
+          <StreamBox text={valueChain} loading={vcLoading} />
+        </div>
+
+        {/* Ability core */}
+        <div className="mt-6">
+          <div className="flex items-center justify-between gap-3">
+            <h3 className="text-sm font-medium">Ability core — knowledge · skills · strengths</h3>
+            <button
+              className={btn}
+              disabled={acLoading}
+              onClick={() => run({ mode: 'ability-core' }, setAbilityCore, setAcLoading, 'ability-core')}
+            >
+              {acLoading ? 'Analyzing…' : abilityCore ? 'Re-run' : 'Analyze'}
+            </button>
+          </div>
+          <StreamBox text={abilityCore} loading={acLoading} />
+        </div>
       </section>
 
       {/* Saved plans */}
