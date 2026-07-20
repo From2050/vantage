@@ -12,15 +12,24 @@ import {
   roadmapStream,
   type PathContext,
 } from '@/lib/ai/paths';
+import {
+  abilityCoreStream,
+  buildAbilityCore,
+  buildValueChain,
+  valueChainStream,
+} from '@/lib/ai/frameworks';
 import { textStreamToResponse } from '@/lib/ai/stream';
 import { USER_ID } from '@/lib/constants';
 
-// One endpoint, three analyses: positioning | adjacent | roadmap.
+// One endpoint, five analyses. Freeform: positioning | adjacent | roadmap.
+// Framework-grounded (see lib/ai/frameworks.ts): value-chain | ability-core.
+const MODES = ['positioning', 'adjacent', 'roadmap', 'value-chain', 'ability-core'];
+
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   const mode = body.mode;
-  if (!['positioning', 'adjacent', 'roadmap'].includes(mode)) {
-    return new Response('mode must be positioning | adjacent | roadmap', { status: 400 });
+  if (!MODES.includes(mode)) {
+    return new Response(`mode must be one of: ${MODES.join(' | ')}`, { status: 400 });
   }
 
   const entries = db.select().from(schema.entries).all().map(rowToEntry);
@@ -75,7 +84,11 @@ export async function POST(req: Request) {
         ? buildPositioning(ctx)
         : mode === 'adjacent'
           ? buildAdjacent(ctx, market)
-          : buildRoadmap(ctx, target, market);
+          : mode === 'value-chain'
+            ? buildValueChain(ctx, market)
+            : mode === 'ability-core'
+              ? buildAbilityCore(ctx)
+              : buildRoadmap(ctx, target, market);
     return Response.json({
       ...built,
       meta: {
@@ -87,7 +100,7 @@ export async function POST(req: Request) {
         writeBack:
           mode === 'roadmap'
             ? 'POST /api/path-plans { targetRole, content }'
-            : `POST /api/analyses { kind: "${mode === 'positioning' ? 'positioning' : 'adjacent'}", content, source: "agent" }`,
+            : `POST /api/analyses { kind: "${mode === 'positioning' ? 'positioning' : mode === 'adjacent' ? 'adjacent' : mode}", content, source: "agent" }`,
       },
     });
   }
@@ -98,6 +111,10 @@ export async function POST(req: Request) {
       stream = await positioningStream(ctx);
     } else if (mode === 'adjacent') {
       stream = await adjacentPathsStream(ctx, market);
+    } else if (mode === 'value-chain') {
+      stream = await valueChainStream(ctx, market);
+    } else if (mode === 'ability-core') {
+      stream = await abilityCoreStream(ctx);
     } else {
       stream = await roadmapStream(ctx, target, market);
     }

@@ -11,7 +11,7 @@ export interface PathContext {
   goals: GoalsDocument | null;
 }
 
-function contextBlock(ctx: PathContext): string {
+export function contextBlock(ctx: PathContext): string {
   const entryTitle = new Map(ctx.entries.map((e) => [e.id, e.title || 'Untitled']));
   const skillLines = ctx.skills.length
     ? ctx.skills
@@ -47,7 +47,7 @@ Limits: ${g?.limitsText?.trim() || '(not provided)'}
 Identity: ${g?.identityText?.trim() || '(not provided)'}`;
 }
 
-const SHARED_RULES = `Ground rules:
+export const SHARED_RULES = `Ground rules:
 - The skill portfolio is the center of gravity. Reason FROM the person's skills outward — never squeeze them into a market template.
 - Reference their actual skills and entry titles. Never invent skills, experience, or market facts.
 - Be honest about weak evidence; do not flatter. Distinguish "well-evidenced now" vs "needs development".

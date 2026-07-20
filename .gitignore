@@ -45,3 +45,6 @@ next-env.d.ts
 # local sqlite database
 db.sqlite
 db.sqlite-*
+
+# validation subjects (real people's data — never committed)
+validation/

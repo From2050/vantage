@@ -1,7 +1,7 @@
 import { desc, eq } from 'drizzle-orm';
 import { db, schema } from '@/lib/db';
 
-const KINDS = ['skill', 'positioning', 'adjacent'];
+const KINDS = ['skill', 'positioning', 'adjacent', 'value-chain', 'ability-core'];
 
 // GET /api/analyses?kind=skill&latest=1 — list (or latest single) analyses.
 export async function GET(req: Request) {

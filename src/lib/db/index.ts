@@ -7,10 +7,13 @@ const globalForDb = globalThis as unknown as {
   sqlite?: Database.Database;
 };
 
+// VANTAGE_DB switches the database file — used for isolated profiles (e.g.
+// validation subjects: `VANTAGE_DB=validation/subject-a.sqlite npm run dev`)
+// without ever touching the owner's db.sqlite.
 const sqlite =
   globalForDb.sqlite ??
   (() => {
-    const conn = new Database('db.sqlite');
+    const conn = new Database(process.env.VANTAGE_DB ?? 'db.sqlite');
     conn.pragma('journal_mode = WAL');
     return conn;
   })();

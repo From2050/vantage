@@ -43,11 +43,14 @@ An MCP server wrapping this API ships in the repo (`mcp/` — stdio; env `VANTAG
 
 ### Analysis contexts (contextOnly — no LLM call, for agents)
 - POST /api/ai/skill-analysis         { contextOnly: true } → { system, prompt, meta }
-- POST /api/ai/paths                  { mode: positioning|adjacent|roadmap, contextOnly: true, target?, jdSessionId? } → { system, prompt, meta }
+- POST /api/ai/paths                  { mode: positioning|adjacent|roadmap|value-chain|ability-core, contextOnly: true, target?, jdSessionId?, useWebSearch? } → { system, prompt, meta }
   (without contextOnly these endpoints stream text using Vantage's configured model)
+  Framework modes: value-chain = place evidenced skills on the industry value chain, assess
+  pricing power and repositioning moves; ability-core = decompose the portfolio into knowledge /
+  skills / strengths, with strengths inferred from cross-entry patterns as hypotheses.
 
 ### Write-back
-- POST /api/analyses                  { kind: skill|positioning|adjacent, content: markdown, source: "agent" } → shown on dashboard
+- POST /api/analyses                  { kind: skill|positioning|adjacent|value-chain|ability-core, content: markdown, source: "agent" } → shown on dashboard
 - GET  /api/analyses?kind=…&latest=1  → latest analysis of a kind
 - POST /api/path-plans                { targetRole, content: markdown } → shown in Paths page
 - GET  /api/path-plans                → saved roadmaps

@@ -170,3 +170,31 @@ rows keyed by `USER_ID = 'local'`.
 
 **Why:** Local-first, zero-setup, fast; sync API keeps route handlers simple. Postgres
 compatibility is cheap insurance, not a commitment.
+
+## D14. Framework grounding — validate on real people before building UI
+
+**Decision:** The freeform Paths analyses lack a methodological spine — they produce conclusions,
+not reusable lenses. Direction: ground analysis in named, time-tested career frameworks, starting
+with **value-chain positioning** and the **ability core** (knowledge–skills–strengths) triad
+(`src/lib/ai/frameworks.ts`, modes `value-chain` / `ability-core` on `/api/ai/paths`). BUT no
+product UI is built until the frameworks pass live validation on 3–5 real subjects under the
+pre-registered protocol in docs/validation-protocol.md.
+
+**Why:** Honest reassessment (after zero organic traction) concluded: the evidence data layer is
+real differentiation; the analysis layer was "AI freestyle guided by good prompts" — plausible
+output, but users learn no transferable mental model, and it under-answers "why not just ChatGPT".
+Framework × personal evidence base × persistent artifact is the defensible combination. Validation
+comes first because the project has exactly one validated user so far — building more UI on an
+unvalidated hypothesis is how the 自嗨 risk compounds.
+
+**IP boundary:** implemented as generic frameworks (value-chain analysis is Porter-derived; the
+knowledge/skill/strength triad is standard capability literature, popularized in Chinese career
+writing by 古典 among others). Neutral English names in code and UI; no course branding or content.
+
+**How to apply:** run the protocol; record results in `validation/results.md`. If validation
+passes, the UI should be a guided stepwise calibration producing persistent artifacts — not
+another streaming text box. The strengths layer must always be phrased as hypotheses citing
+cross-entry patterns.
+
+**What would change it:** the validation result itself — that's the point. Subjects' verbatim
+"fortune-telling" complaints are the highest-value signal for prompt revision.

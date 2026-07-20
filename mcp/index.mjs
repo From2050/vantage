@@ -139,9 +139,9 @@ server.tool(
 
 server.tool(
   'get_analysis_context',
-  'Fetch a fully-assembled analysis context (system + prompt) WITHOUT calling any LLM. Modes: "skill" (skill-direction analysis), "positioning" (where the portfolio stands), "adjacent" (paths reachable with a similar composition), "roadmap" (skill-building plan toward target — requires target). Reason over it with your own model, then write the result back using the endpoint named in meta.writeBack (or save_analysis / save_path_plan).',
+  'Fetch a fully-assembled analysis context (system + prompt) WITHOUT calling any LLM. Modes: "skill" (skill-direction analysis), "positioning" (where the portfolio stands), "adjacent" (paths reachable with a similar composition), "roadmap" (skill-building plan toward target — requires target), "value-chain" (place evidenced skills on the industry value chain; pricing power + repositioning moves), "ability-core" (knowledge/skills/strengths decomposition; strengths inferred from cross-entry patterns as hypotheses). Reason over it with your own model, then write the result back using the endpoint named in meta.writeBack (or save_analysis / save_path_plan).',
   {
-    mode: z.enum(['skill', 'positioning', 'adjacent', 'roadmap']),
+    mode: z.enum(['skill', 'positioning', 'adjacent', 'roadmap', 'value-chain', 'ability-core']),
     target: z.string().optional(),
     jdSessionId: z.string().optional(),
   },
@@ -160,8 +160,8 @@ server.tool(
 
 server.tool(
   'save_analysis',
-  'Write an analysis result back to Vantage (appears on the dashboard, marked as agent-sourced). kind: skill | positioning | adjacent.',
-  { kind: z.enum(['skill', 'positioning', 'adjacent']), content: z.string() },
+  'Write an analysis result back to Vantage (appears on the dashboard, marked as agent-sourced). kind: skill | positioning | adjacent | value-chain | ability-core.',
+  { kind: z.enum(['skill', 'positioning', 'adjacent', 'value-chain', 'ability-core']), content: z.string() },
   async ({ kind, content }) =>
     asText(
       await api('/api/analyses', {
