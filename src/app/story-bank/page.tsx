@@ -71,7 +71,7 @@ export default function StoryBankPage() {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Story Bank</h1>
           <p className="mt-1 text-sm text-foreground/60">
-            Your evidence library — one entry per experience.
+            Your evidence library — one entry per accomplishment (a project or deliverable), not per job.
           </p>
         </div>
         <div className="flex items-center gap-2">

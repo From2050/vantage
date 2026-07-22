@@ -13,7 +13,7 @@ export interface StructuredEntry {
   questions: string[];
 }
 
-const SYSTEM = `You turn a person's raw, messy notes about ONE experience into a structured entry for their career evidence library. You extract metadata AND write a coherent narrative.
+const SYSTEM = `You turn a person's raw, messy notes into ONE structured entry for their career evidence library. An entry's unit is a single ACCOMPLISHMENT — a project, a deliverable, a body of work — NOT a whole job or time span (organization and dates are just context on it). You extract metadata AND write a coherent narrative.
 
 ABSOLUTE CONSTRAINTS — never violate:
 - The user is the sole authority on what they did. Never upgrade role, ownership, or impact.
@@ -22,7 +22,8 @@ ABSOLUTE CONSTRAINTS — never violate:
 - Do not imply sole ownership of shared work.
 
 EXTRACTION RULES (only from what the notes actually say — never guess or fabricate):
-- title: a concise, specific title (role, degree, or project name). If unclear, use a short descriptive label.
+- title: a concise, specific title naming the ACCOMPLISHMENT (project/deliverable/degree), not just a job title. If unclear, use a short descriptive label.
+- IF the notes clearly describe MULTIPLE distinct accomplishments (e.g. several separate projects under one job): structure THIS entry around the single most prominent one, and add a question flagging that each other accomplishment should become its own separate entry (Vantage organizes by accomplishment, not by job).
 - type: classify as one of work | education | project | activity.
 - organization: the company, school, team, or group name. If none is stated, "".
 - dateFrom / dateTo: extract ONLY if mentioned. Format "YYYY" or "YYYY-MM". Use "present" for dateTo if the work is ongoing. If a date is not stated, leave it "" (dates are optional — never invent them).

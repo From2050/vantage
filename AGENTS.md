@@ -95,6 +95,14 @@ mcp/index.mjs               # MCP stdio server — thin HTTP proxy over the REST
 docs/  public/llms.txt      # documentation (see table above)
 ```
 
+**Entry granularity (core principle):** an `entry` is a unit of *accomplished work* — a project, a
+deliverable, a body of work with a distinct outcome — **divided by accomplishment, NOT by job title
+or time period.** One job commonly yields several entries (same `organization`, overlapping dates);
+`organization`/dates are context on an accomplishment, not its boundary. This finer granularity is
+what makes the evidence→skill links precise, and it's the product's identity — never reshape entries
+back toward "one job = one entry." (Enforced in `structure.ts`, `splitResume.ts`, and the guided
+playbook.)
+
 Data flow: `entries` (evidence) → AI extraction → `skills` + weighted `entry_skills` links →
 `skillScore` → dashboard visuals + Paths context. JD: file/text → digest (computed **once**, stored
 on `jd_sessions`) → reused by Matcher and Generator (raw JD text is never re-sent). Analyses and

@@ -35,15 +35,29 @@ user's data touches stays on their machine.
 
 ## The flow
 
-### 1 · Stories (the evidence base)
-Goal: one entry per experience (work / education / project / activity).
-- Ask how they want to provide them (chat / UI at `/story-bank` / existing résumé or docs).
-- If in chat or from a doc: for each experience, capture the raw facts, then write a coherent
-  first-person narrative **without upgrading verbs or inventing anything**. Create it via
-  `create_entry` (MCP) or `POST /api/entries`. Dates are optional. If key facts are missing, ask —
-  don't guess.
-- If they have a résumé/CV, you can also point them to the UI's "Import from file" which auto-splits
-  it into entries; or read it yourself and create entries.
+### 1 · Stories (the evidence base — one entry per ACCOMPLISHMENT, not per job)
+**The unit of an entry is a coherent piece of accomplished work** — a project, a deliverable, a body
+of work with a distinct outcome — **NOT a job title or a block of time.** This is the heart of
+Vantage: skills are extracted from *what was accomplished*, so the boundary must be the
+accomplishment. Organization and dates are *context on* an accomplishment (which job, when), never
+the thing that defines it.
+
+- **A single job usually becomes several entries.** If a role spanned multiple distinct bodies of
+  work (e.g. "UX720V6 respin RTL", "post-silicon bring-up", "Linux bring-up", "edge-AI accelerator",
+  "IMU driver + EIS"), make **each one its own entry** — same organization and overlapping dates are
+  fine and expected. **Do NOT ask the user to choose "split by job vs. merge into one" — that is the
+  wrong axis.** Splitting by accomplishment is simply how Vantage works; just do it, and confirm the
+  list of accomplishments with them. The only clarifying questions worth asking are about the
+  accomplishments themselves (scope, their specific role, the outcome).
+- Ask how they want to provide the material (chat / UI at `/story-bank` / an existing résumé or
+  doc). However it arrives, break it into accomplishment-level entries. A résumé grouped by job
+  should be re-split into one entry per accomplishment.
+- For each entry: capture the raw facts, then write a coherent first-person narrative **without
+  upgrading verbs or inventing anything**. Create it via `create_entry` (MCP) or `POST /api/entries`.
+  Dates are optional. If key facts are missing, ask — don't guess.
+- `type` (work / project / education / activity) is a loose tag for the accomplishment's context (an
+  accomplishment inside a job is usually "work" or "project"); it does not change the
+  accomplishment-as-unit rule.
 
 ### 2 · Skill portfolio
 - Trigger extraction: `extract_skills` (MCP) or `POST /api/ai/extract-skills`. This produces skills

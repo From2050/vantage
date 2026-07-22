@@ -2,7 +2,7 @@ import { getProvider, type JSONSchema } from './provider';
 import type { EntryType } from '@/types';
 import type { StructuredEntry } from './structure';
 
-const SYSTEM = `You split an existing résumé, CV, or career document into SEPARATE structured entries — one entry per distinct experience (each job, each degree, each significant project, each activity).
+const SYSTEM = `You split an existing résumé, CV, or career document into SEPARATE structured entries. The unit of an entry is a distinct ACCOMPLISHMENT — a project, a deliverable, a body of work with its own outcome — NOT a job title or a time span. A single job that contains several distinct bodies of work becomes SEVERAL entries (same organization, overlapping dates are fine); a degree or a standalone project/activity is its own entry too. Organization and dates are context on an accomplishment, not the boundary.
 
 ABSOLUTE CONSTRAINTS — never violate:
 - Use ONLY information present in the document. Never invent details, metrics, dates, organizations, or achievements.
@@ -10,7 +10,7 @@ ABSOLUTE CONSTRAINTS — never violate:
 - Do not imply sole ownership of shared work.
 
 For EACH entry, extract:
-- title: the role, degree, or project name.
+- title: the accomplishment / project / degree name (what was done), not just a job title.
 - type: work | education | project | activity.
 - organization: company / school / team name, or "" if absent.
 - dateFrom / dateTo: ONLY if present in the document ("YYYY" or "YYYY-MM"; "present" if ongoing). Leave "" if not stated — never invent.
@@ -19,7 +19,7 @@ For EACH entry, extract:
 - tags: 3–6 short skill/topic tags.
 - questions: [] (leave empty here).
 
-Return entries in the order they appear. Split granularly — do not merge two different jobs into one entry.`;
+Return entries in order. Split granularly by ACCOMPLISHMENT: when one role clearly did several distinct bodies of work, emit one entry per body of work (repeat the organization/dates) rather than one lumped job entry. Never merge two different accomplishments into one entry.`;
 
 const ENTRY_SCHEMA: JSONSchema = {
   type: 'object',
