@@ -36,8 +36,9 @@ export type SkillCategory = 'technical' | 'tool' | 'domain' | 'soft';
 
 export const SKILL_CATEGORIES: SkillCategory[] = ['technical', 'tool', 'domain', 'soft'];
 
-// Evidence weight: 3 = core work of that entry, 2 = substantial use, 1 = mentioned.
-export type EvidenceWeight = 1 | 2 | 3;
+// Evidence weight = ownership-depth ladder for a skill within an entry:
+// 4 = led/architected at scale, 3 = owned core, 2 = contributed, 1 = used.
+export type EvidenceWeight = 1 | 2 | 3 | 4;
 
 export interface SkillEvidence {
   entryId: string;

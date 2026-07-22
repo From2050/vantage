@@ -54,7 +54,7 @@ cover letter, chat) to 2800 (roadmap) to 6000–8000 (bulk extraction/splitting)
 | `company.ts` | `POST /api/ai/company-research` | webSearch | **Capability-gated**: throws a clear message when `!capabilities.webSearch`; UI degrades to manual field. Returns prose + sources. |
 | `skillAnalysis.ts` | `POST /api/ai/skill-analysis` | stream + contextOnly | Clusters / strengths / gaps / directions, grounded in entries+goals. Result persisted to `analyses` (kind `skill`). |
 | `paths.ts` | `POST /api/ai/paths` | stream + contextOnly | Three builders: `buildPositioning`, `buildAdjacent(ctx, market)`, `buildRoadmap(ctx, target, market)`. Context = skills (with strength + weighted evidence) + entries + goals. Market (JD digest, `marketResearch()`) injected as *reference*. Persisted kinds: `positioning`, `adjacent`; roadmaps saved via `/api/path-plans`. |
-| `extractSkills.ts` | `POST /api/ai/extract-skills` | JSON | Portfolio extraction with per-link weight 3/2/1 ("most links are NOT 3"). Reuses existing skill names passed in prompt; upsert preserves curation (see decisions.md D5). |
+| `extractSkills.ts` | `POST /api/ai/extract-skills` | JSON | Portfolio extraction with per-link ownership-depth weight 1–4 (4 led/architected @scale, 3 owned core, 2 contributed, 1 used; 4 is rare, judged from narrative). Drives strength (D3). Reuses existing skill names passed in prompt; upsert preserves curation (see decisions.md D5). |
 | career chat | `POST /api/ai/career-chat` | stream (messages) | System = entry summaries (not full narratives) + full goals. History capped at last 20 messages; last message must be user. |
 
 ## Copy-paste constraint blocks

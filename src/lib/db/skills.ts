@@ -12,7 +12,7 @@ export function listSkills(): Skill[] {
       arr = [];
       bySkill.set(l.skillId, arr);
     }
-    const weight = (l.weight >= 1 && l.weight <= 3 ? l.weight : 2) as EvidenceWeight;
+    const weight = (l.weight >= 1 && l.weight <= 4 ? l.weight : 2) as EvidenceWeight;
     arr.push({ entryId: l.entryId, weight });
   }
   const weightSum = (evidence: SkillEvidence[]) => evidence.reduce((a, e) => a + e.weight, 0);

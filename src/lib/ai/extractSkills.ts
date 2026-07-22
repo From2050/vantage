@@ -13,11 +13,12 @@ const SYSTEM = `You extract a person's SKILL PORTFOLIO from their experience ent
 Rules:
 - Extract ONLY skills genuinely evidenced by entry content. Never invent or embellish.
 - Each skill lists evidence links: { entryId, weight } using only entryIds given in the input.
-- weight rates how central the skill is to THAT entry:
-  - 3 (core): the skill IS the main work of the entry — remove it and the entry loses its point.
-  - 2 (supporting): substantial, repeated use, but not the entry's center.
-  - 1 (mentioned): appears or was touched lightly.
-  Rate honestly — most links are NOT 3.
+- weight rates the person's OWNERSHIP DEPTH and the SCALE of the work for this skill in THIS entry:
+  - 4 (led/architected): they led or architected a substantial system or effort with this skill — end-to-end ownership at real scale.
+  - 3 (owned core): the skill was the core of the work and they owned that core.
+  - 2 (contributed): substantial hands-on use, but shared or bounded ownership.
+  - 1 (used): touched, applied, or exposed to it.
+  Rate honestly and CONSERVATIVELY: 4 is rare (genuine leadership/architecture at scale), most links are 1–2, and a skill only reaches the top of the strength scale through level-3/4 ownership — never through many shallow mentions. Judge depth/scale from what the entry actually says; if the narrative doesn't show ownership or scale, do not award 3–4.
 - Granularity: skills a peer in the field would recognize as one competence. Not too broad ("engineering"), not too narrow ("wrote one Python script"). Aim for 8–25 skills total depending on the evidence.
 - Merge near-duplicates into one canonical name (e.g. "DDR calibration" + "DDR3 tuning" → "DDR calibration"). Prefer the field's standard term, capitalized normally.
 - If EXISTING SKILLS are provided, reuse their exact names when the same competence appears — do not create renamed duplicates.
@@ -107,7 +108,7 @@ export async function extractSkills(
         if (!entryId || !validIds.has(entryId) || seenEntries.has(entryId)) continue;
         seenEntries.add(entryId);
         const w = Number(e.weight);
-        const weight = (w >= 1 && w <= 3 ? Math.round(w) : 2) as EvidenceWeight;
+        const weight = (w >= 1 && w <= 4 ? Math.round(w) : 2) as EvidenceWeight;
         evidence.push({ entryId, weight });
       }
     }

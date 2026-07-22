@@ -38,22 +38,30 @@ without upgrading it) — acceptable floor is *no upgrade*; exact-verb preservat
 **What would change it:** Nothing. If a model can't hold the constraint, gate features by tier
 instead of weakening the constraint.
 
-## D3. Skill strength = weighted evidence × recency + span (0–100)
+## D3. Skill strength = ownership depth, diminishing returns on quantity (0–100)
 
-**Decision:** `Σ(link weights)×12 × recency factor + span bonus`, capped 100; levels at
-10/25/45/70. Link weight 3/2/1 = core/supporting/mentioned, rated per evidence link by the
-extraction AI. Implemented once, purely, in `src/lib/skillScore.ts` (shared server/client).
+**Decision:** `entry_skills.weight` is an **ownership-depth ladder (1–4)**: 4 led/architected at
+scale, 3 owned core, 2 contributed, 1 used. Strength (`src/lib/skillScore.ts`, pure) is depth-first:
+the **deepest** evidence anchors a base (w1→12, w2→26, w3→46, w4→64); further evidence corroborates
+with strong diminishing returns (×0.55 per extra link, cap +24); a lone data point ×0.9; then
+× recency + span bonus. Levels at 10/25/45/70.
 
-**Why:** Raw evidence-count had no resolution (everything scored 1–2). Weighting *how central* a
-skill was to each entry, decaying stale evidence, and rewarding sustained use produced a spread of
-~16 distinct scores across a real 26-skill portfolio — enough to rank and radar meaningfully
-without pretending to more precision than the data has.
+**Why (v3 — replaced the earlier `Σ(weights)×12` linear model):** The linear-sum model **saturated
+from quantity** — a couple of core links or several mentions hit the 100 cap, so a domain touched in
+two entries scored 100 and a one-talk exposure scored 77. Two user complaints: (1) scores saturate;
+the tool's ceiling sits far below real-world mastery, compressing everyone at the top. (2) past the
+mid-band, strength should reflect the *depth* of accomplishments, the *scale* of systems, and
+*ownership* depth — not accumulated count. The depth-anchored, diminishing-returns curve fixes both:
+mentions saturate low, only genuine ownership (w3–4) unlocks the top, and 90–100 needs sustained,
+recent, led-at-scale evidence. Requires re-extraction to populate the new w4 tier.
 
-**How to apply:** Never fork the formula into components — always import `strengthOf`/`levelOf`.
-UI copy should describe strength as "weighted evidence × recency", not as objective skill level.
+**How to apply:** Never fork the formula — always import `strengthOf`/`levelOf`. The extraction
+prompt (`extractSkills.ts`) must rate weight from *ownership/scale evidenced in the narrative*, and
+call w4 rare. UI copy: "ownership depth × recency", never an objective skill level.
 
-**What would change it:** User feedback that scores feel wrong in a *systematic* direction (e.g.
-recency decay too harsh for foundational skills). Tune constants in one place; update this entry.
+**What would change it:** systematic-feeling scores after real use — tune the base/decay/recency
+constants in one place and update this entry. If weight alone can't capture scale, add an explicit
+AI-rated scale signal (bigger change; consider only if depth resolution proves insufficient).
 
 ## D4. No entry-type weighting in scores — deliberately
 

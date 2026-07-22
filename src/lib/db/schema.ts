@@ -71,7 +71,8 @@ export const entrySkills = sqliteTable(
   {
     entryId: text('entry_id').notNull(), // FK -> entries.id
     skillId: text('skill_id').notNull(), // FK -> skills.id
-    // Evidence weight: 3 = core work of that entry, 2 = substantial use, 1 = mentioned.
+    // Ownership-depth ladder: 4 = led/architected at scale, 3 = owned core,
+    // 2 = contributed, 1 = used. Drives skill strength (src/lib/skillScore.ts).
     weight: integer('weight').notNull().default(2),
   },
   (t) => [primaryKey({ columns: [t.entryId, t.skillId] })],

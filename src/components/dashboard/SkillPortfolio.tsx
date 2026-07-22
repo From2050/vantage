@@ -154,7 +154,8 @@ export default function SkillPortfolio() {
         </button>
       </div>
       <p className="mt-1 text-xs text-foreground/50">
-        Strength = weighted evidence × recency, 0–100. Click a skill to see evidence and curate.
+        Strength = ownership depth × recency, 0–100 — the top is earned by owning/leading, not by
+        piling up mentions. Click a skill to see evidence and curate.
       </p>
 
       {error && (
@@ -209,12 +210,14 @@ export default function SkillPortfolio() {
                           {s.evidence.map((ev) => (
                             <li key={ev.entryId} className="flex items-center gap-2">
                               <span
-                                className={`inline-block w-20 shrink-0 rounded px-1.5 py-0.5 text-center text-[10px] font-medium ${
-                                  ev.weight === 3
-                                    ? 'bg-[var(--accent)]/15 text-[var(--accent)]'
-                                    : ev.weight === 2
-                                      ? 'bg-black/[.06] dark:bg-white/10'
-                                      : 'border border-black/10 text-foreground/45 dark:border-white/15'
+                                className={`inline-block w-24 shrink-0 rounded px-1.5 py-0.5 text-center text-[10px] font-medium ${
+                                  ev.weight === 4
+                                    ? 'bg-[var(--accent)] text-white'
+                                    : ev.weight === 3
+                                      ? 'bg-[var(--accent)]/15 text-[var(--accent)]'
+                                      : ev.weight === 2
+                                        ? 'bg-black/[.06] dark:bg-white/10'
+                                        : 'border border-black/10 text-foreground/45 dark:border-white/15'
                                 }`}
                               >
                                 {WEIGHT_LABEL[ev.weight]}

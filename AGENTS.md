@@ -167,10 +167,14 @@ JSON-encoded columns (`keyHighlights`, `tags`, `digest`, `selectedEntryIds`, `li
 
 ## Skill model semantics (do not change casually — see docs/decisions.md D3–D4)
 
-- `entry_skills.weight`: 3 = core work of that entry, 2 = substantial use, 1 = mentioned.
-- Strength 0–100 (`src/lib/skillScore.ts`, pure): `Σ(weights)×12 × recency + span bonus`.
-  Recency: <1y ×1.0, 1–3y ×0.85, >3y ×0.7, undated ×0.9. Span: +2/yr capped +10.
-  Levels at 10/25/45/70 → Lv.1–5. **No entry-type weighting by design** (all evidence counts).
+- `entry_skills.weight` is an **ownership-depth ladder** (1–4): 4 = led/architected at scale,
+  3 = owned core, 2 = contributed, 1 = used. NOT a "how many times mentioned" count.
+- Strength 0–100 (`src/lib/skillScore.ts`, pure) is **depth-first and hard to saturate**: the
+  DEEPEST evidence anchors a base (w1→12, w2→26, w3→46, w4→64); further evidence corroborates with
+  strong diminishing returns (cap +24). Then × recency (<1y ×1.0, 1–3y ×0.85, >3y ×0.7, undated
+  ×0.9) + span bonus (+2/yr, cap +10). Levels at 10/25/45/70 → Lv.1–5. **The top band is reserved
+  for genuine ownership depth (w3–4) — you cannot reach it by piling up shallow mentions.**
+  **No entry-type weighting by design** (all evidence counts).
 - Re-extraction (`/api/ai/extract-skills`) upserts by case-insensitive name: user curation
   (id, name casing, category) survives; evidence links are refreshed; zero-evidence skills dropped.
 
