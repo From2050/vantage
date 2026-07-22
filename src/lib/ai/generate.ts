@@ -16,6 +16,12 @@ ROUTING — place each entry in the correct section ONLY (never repeat an entry 
 - "projects" entries → ## Projects
 - "education" entries → ## Education
 
+NORTH-AMERICAN RÉSUMÉ CONVENTIONS (this is a standard NA one-page résumé body):
+- No objective statement, no personal data (no photo, age, marital status, nationality, gender), no "References available on request".
+- Every Experience/Projects bullet leads with a strong past-tense action verb (Built, Shipped, Reduced, Designed…) — but WITHOUT upgrading the entry's ownership verbs (if the entry says "helped debug", write "Helped debug", not "Led debugging").
+- Quantify outcomes ONLY where the entry already states the number; never invent metrics to look quantified.
+- Keep it tight and skimmable — favor the strongest, most JD-relevant evidence; a one-page density is the target.
+
 FORMATTING:
 - Use the JD digest to choose emphasis and ordering within Experience (most relevant first, otherwise reverse-chronological).
 - Dates: render "dateFrom – dateTo". If a date is missing/empty, omit it gracefully (no stray dashes). If both are missing, omit the date entirely.

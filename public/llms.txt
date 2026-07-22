@@ -39,11 +39,13 @@ An MCP server wrapping this API ships in the repo (`mcp/` — stdio; env `VANTAG
 - GET/PUT /api/goals                  { visionText, limitsText, identityText, aiSummary }
 - GET/PUT /api/profile                { fullName, headline, email, phone, location, links[] }
 - GET    /api/jd-sessions             → JDSession[] { id, filename, digest: { summary, keywords[], requirements[], niceToHave[], roleLevel, context } }
-- POST   /api/jd-sessions             multipart form (file: PDF, or text field) → creates session + digest
+- POST   /api/jd-sessions             creates session + digest. Two body forms:
+                                        JSON { text, filename? } (agents) OR multipart (file: PDF, or text field)
 
 ### Analysis contexts (contextOnly — no LLM call, for agents)
 - POST /api/ai/skill-analysis         { contextOnly: true } → { system, prompt, meta }
-- POST /api/ai/paths                  { mode: positioning|adjacent|roadmap|value-chain|ability-core, contextOnly: true, target?, jdSessionId?, useWebSearch? } → { system, prompt, meta }
+- POST /api/ai/paths                  { mode: positioning|adjacent|roadmap|value-chain|ability-core, contextOnly: true, target?, jdSessionId?, marketText?, useWebSearch? } → { system, prompt, meta }
+                                        marketText = agent-supplied aggregate JD/market research, injected as reference
   (without contextOnly these endpoints stream text using Vantage's configured model)
   Framework modes: value-chain = place evidenced skills on the industry value chain, assess
   pricing power and repositioning moves; ability-core = decompose the portfolio into knowledge /
@@ -57,3 +59,4 @@ An MCP server wrapping this API ships in the repo (`mcp/` — stdio; env `VANTAG
 
 ### Misc
 - GET /api/ai/capabilities            → { name, webSearch, jsonSchema, tier } of the app's active provider
+- GET /api/status                     → { entries, skills, jdCount, resumes, goalsSet, profileSet, analyses:{kind:ts}, hasFrameworkAnalysis } — progress snapshot for the guided flow

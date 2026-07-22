@@ -11,6 +11,7 @@ import SkillPortfolio from '@/components/dashboard/SkillPortfolio';
 import RadarPanel from '@/components/dashboard/RadarPanel';
 import SkillTimeline from '@/components/dashboard/SkillTimeline';
 import DemoDataButton from '@/components/dashboard/DemoDataButton';
+import GettingStarted from '@/components/dashboard/GettingStarted';
 
 export const dynamic = 'force-dynamic';
 
@@ -115,12 +116,7 @@ export default function Dashboard() {
           </div>
         </div>
       ) : (
-        (!profileComplete || !goalsStarted) && (
-          <div className="flex flex-wrap gap-2 text-sm">
-            {!profileComplete && <Nudge href="/profile" text="Complete your profile →" />}
-            {!goalsStarted && <Nudge href="/goals" text="Define your goals & values →" />}
-          </div>
-        )
+        <GettingStarted />
       )}
 
       {/* Hero: radar + stats */}

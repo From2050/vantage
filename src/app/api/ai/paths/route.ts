@@ -47,8 +47,12 @@ export async function POST(req: Request) {
     goals: goalsRow ? rowToGoals(goalsRow) : null,
   };
 
-  // Assemble market reference data (JD digest and/or provider-optional web search).
+  // Assemble market reference data (JD digest, agent-provided research, and/or web search).
   const marketParts: string[] = [];
+  if (typeof body.marketText === 'string' && body.marketText.trim()) {
+    // Agent-supplied aggregate JD / market research — treated as reference, not a mold.
+    marketParts.push(`Aggregate market research:\n${body.marketText.trim()}`);
+  }
   if (typeof body.jdSessionId === 'string' && body.jdSessionId) {
     const row = db
       .select()

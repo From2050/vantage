@@ -2,18 +2,20 @@ import { getProvider } from './provider';
 import { contextBlock, SHARED_RULES, type PathContext } from './paths';
 
 // Framework-grounded career calibration. Unlike the freeform Paths analyses,
-// these run the person's evidence through named, time-tested career lenses:
+// these run the person's evidence through named, time-tested career lenses,
+// each attributed to its primary source:
 //
-//   - Value-chain positioning (Porter-derived): where does the evidence place
-//     this person on their industry's value chain, and what moves change their
-//     pricing power?
-//   - Ability core (knowledge – skills – strengths): a standard capability
-//     decomposition; the "strengths" layer is inferred from patterns that
-//     repeat ACROSS entries — something self-assessment sheets cannot do.
+//   - Value-chain positioning: the value-chain concept from Michael E. Porter,
+//     "Competitive Advantage" (1985) — where does the evidence place this person
+//     on their industry's value chain, and what moves change their pricing power?
+//   - Ability core (knowledge – skills – strengths): the Knowledge/Skills/Abilities
+//     (KSA) decomposition from occupational psychology and job analysis; the
+//     "strengths" layer follows the definition of talent as recurring patterns of
+//     thought, feeling, and behavior from Marcus Buckingham & Donald O. Clifton,
+//     "Now, Discover Your Strengths" (2001) — here inferred from patterns that
+//     repeat ACROSS entries, which self-assessment sheets cannot do.
 //
-// Inspired by classic career-development methodology (value-chain analysis,
-// capability triads popularized in Chinese career literature by 古典 among
-// others); implemented here as generic frameworks with no course content.
+// Implemented as generic frameworks (no third-party course content).
 // See docs/decisions.md D14 for the validation-first rationale.
 
 const FIDELITY_RULES = `ABSOLUTE CONSTRAINTS — never violate:

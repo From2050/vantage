@@ -1,5 +1,10 @@
 # Vantage — agent development guide
 
+> **Operating Vantage as a guided agent?** If the user wants you to *analyze them* with Vantage
+> (not develop the code), follow **[docs/agent-playbook.md](docs/agent-playbook.md)** — the guided
+> flow (stories → skills → goals/talents → market research → framework positioning report). This
+> file below is for *developing* Vantage.
+
 **Read this file before writing any code.** It is the single source of truth for how this project
 is developed, by humans and by AI coding agents (Codex, Claude Code, Cursor, …). It was written by
 the AI that built v1 to transfer every judgment call and standard to whoever continues the work.
@@ -8,10 +13,11 @@ Deep dives (read when your task touches them):
 
 | Doc | What it holds |
 | --- | --- |
+| [docs/agent-playbook.md](docs/agent-playbook.md) | **Operating the app for a user** — the guided analysis flow (agent-native front door) |
 | [docs/decisions.md](docs/decisions.md) | Why things are the way they are — decision log with "what would change it" |
 | [docs/ai-contracts.md](docs/ai-contracts.md) | Per-AI-module contracts, copy-paste prompt constraint blocks, tier playbook |
 | [docs/verification.md](docs/verification.md) | Runnable quality gates (exact commands + pass criteria) and release checklist |
-| [docs/agent-quickstart.md](docs/agent-quickstart.md) | For agents *operating the app* (not developing it) |
+| [docs/agent-quickstart.md](docs/agent-quickstart.md) | For agents *operating the app* — MCP/REST quickstart |
 | [public/llms.txt](public/llms.txt) | REST API reference — **must stay in sync with routes** |
 
 <!-- BEGIN:nextjs-agent-rules -->

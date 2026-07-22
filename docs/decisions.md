@@ -187,9 +187,13 @@ Framework × personal evidence base × persistent artifact is the defensible com
 comes first because the project has exactly one validated user so far — building more UI on an
 unvalidated hypothesis is how the 自嗨 risk compounds.
 
-**IP boundary:** implemented as generic frameworks (value-chain analysis is Porter-derived; the
-knowledge/skill/strength triad is standard capability literature, popularized in Chinese career
-writing by 古典 among others). Neutral English names in code and UI; no course branding or content.
+**Primary sources / IP boundary:** each framework is attributed to its origin — value chain from
+Michael E. Porter, *Competitive Advantage* (1985); the Knowledge/Skills/Abilities decomposition from
+occupational-psychology job analysis; "talent = recurring patterns of thought, feeling, and
+behavior" from Marcus Buckingham & Donald O. Clifton, *Now, Discover Your Strengths* (2001);
+vocational interests (used by the assessment module) from John L. Holland, *Making Vocational
+Choices* (1973), with public-domain items from the U.S. DoL O*NET Interest Profiler. Cite primaries,
+never a secondary course; neutral English names in code and UI; no third-party course content.
 
 **How to apply:** run the protocol; record results in `validation/results.md`. If validation
 passes, the UI should be a guided stepwise calibration producing persistent artifacts — not
@@ -198,3 +202,33 @@ cross-entry patterns.
 
 **What would change it:** the validation result itself — that's the point. Subjects' verbatim
 "fortune-telling" complaints are the highest-value signal for prompt revision.
+
+## D15. Agent-native guided flow is the product form (and the distribution answer)
+
+**Decision:** Vantage ships as a **fork-and-run, agent-native** tool. The user forks the repo and
+tells their own coding agent (Claude Code / Codex) to "analyze me"; the agent reads the guided
+playbook (`docs/agent-playbook.md`, surfaced via `AGENTS.md` and a Claude Code skill) and walks the
+flow — experiences → skills → goals/talents → aggregate market research → positioning report —
+writing everything through the same REST/MCP API the UI uses, so UI and agent share one dataset.
+The agent interface is **REST-first** (call the API per `llms.txt`, zero MCP setup; MCP is an
+optional upgrade). Résumé generation stays UI-only, bound to a specific target JD the user actually
+intends to apply to.
+
+**Why:** This resolves the distribution question without hosting. Every hosted option (multi-tenant
+web app, Drive-as-backend, browser extension) means holding other people's career data and/or a
+rewrite; a desktop build is heavier. Fork-and-run keeps **single instance = single user forever**
+(`USER_ID = 'local'` is final, never a transition to multi-user), zero data liability, and matches
+the open-source / local-first / model-autonomous identity. It is also the cheapest validation
+vehicle: hand the repo to a friend with Claude Code.
+
+**Assessment IP boundary:** the talents/interests step uses a **pluggable** assessment
+(`src/lib/assessments/`) whose default is a public-domain instrument (Holland RIASEC via O*NET);
+swapping in a custom questionnaire is a JSON drop-in. Never ship a trademarked instrument's items.
+
+**How to apply:** any new capability should be reachable BOTH from the UI and from the agent (add
+the REST route + a thin MCP proxy + a line in `llms.txt` and the playbook). Keep SYSTEM constants
+and context builders separated so `contextOnly` stays free (see D9).
+
+**What would change it:** if fork-and-run friction proves too high for non-technical users, a
+desktop (Electron) build is the pre-considered next step — still local, still single-user, no
+hosting.

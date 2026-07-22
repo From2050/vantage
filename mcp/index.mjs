@@ -121,8 +121,40 @@ server.tool('get_goals', "The user's goals & values document (vision / limits / 
   asText(await api('/api/goals')),
 );
 
+server.tool(
+  'set_goals',
+  "Set the user's goals & values (partial update). vision = ideal work/life direction; limits = non-negotiables/trade-offs; identity = self-description. The user is the sole authority — record what they say, never prescribe.",
+  {
+    visionText: z.string().optional(),
+    limitsText: z.string().optional(),
+    identityText: z.string().optional(),
+  },
+  async (fields) => asText(await api('/api/goals', { method: 'PUT', body: JSON.stringify(fields) })),
+);
+
 server.tool('get_profile', 'Contact/profile info used in résumé headers.', {}, async () =>
   asText(await api('/api/profile')),
+);
+
+server.tool(
+  'set_profile',
+  'Set contact/profile info (partial update): fullName, headline, email, phone, location, links[].',
+  {
+    fullName: z.string().optional(),
+    headline: z.string().optional(),
+    email: z.string().optional(),
+    phone: z.string().optional(),
+    location: z.string().optional(),
+    links: z.array(z.string()).optional(),
+  },
+  async (fields) => asText(await api('/api/profile', { method: 'PUT', body: JSON.stringify(fields) })),
+);
+
+server.tool(
+  'get_status',
+  'Progress snapshot for the guided flow: { entries, skills, jdCount, goalsSet, profileSet, analyses:{kind:latestCreatedAt} }. Use it to decide where to resume.',
+  {},
+  async () => asText(await api('/api/status')),
 );
 
 server.tool(
@@ -135,6 +167,21 @@ server.tool(
   },
 );
 
+server.tool(
+  'create_jd_session',
+  'Store a job description you researched (raw text). Vantage strips boilerplate and computes a structured digest. Use this to save reference postings for market context.',
+  { text: z.string(), filename: z.string().optional() },
+  async ({ text, filename }) =>
+    asText(await api('/api/jd-sessions', { method: 'POST', body: JSON.stringify({ text, filename }) })),
+);
+
+server.tool(
+  'extract_skills',
+  "Re-extract the skill portfolio from all entries (weighted evidence links). Preserves the user's curation (renames/categories). Run after adding or editing entries.",
+  {},
+  async () => asText(await api('/api/ai/extract-skills', { method: 'POST' })),
+);
+
 // ---- The core agent flow: get context → reason with YOUR model → write back ----
 
 server.tool(
@@ -144,15 +191,16 @@ server.tool(
     mode: z.enum(['skill', 'positioning', 'adjacent', 'roadmap', 'value-chain', 'ability-core']),
     target: z.string().optional(),
     jdSessionId: z.string().optional(),
+    marketText: z.string().optional(),
   },
-  async ({ mode, target, jdSessionId }) => {
+  async ({ mode, target, jdSessionId, marketText }) => {
     if (mode === 'skill') {
       return asText(await api('/api/ai/skill-analysis', { method: 'POST', body: JSON.stringify({ contextOnly: true }) }));
     }
     return asText(
       await api('/api/ai/paths', {
         method: 'POST',
-        body: JSON.stringify({ mode, target, jdSessionId, contextOnly: true }),
+        body: JSON.stringify({ mode, target, jdSessionId, marketText, contextOnly: true }),
       }),
     );
   },

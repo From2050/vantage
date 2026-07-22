@@ -1,0 +1,51 @@
+{
+  "id": "riasec",
+  "name": "Vocational interests (RIASEC)",
+  "source": "Holland's RIASEC model — John L. Holland, Making Vocational Choices (1973). Activity-rating format modeled on the public-domain O*NET Interest Profiler (U.S. Department of Labor). Items here are original statements in that public-domain style; no proprietary instrument's items are reproduced.",
+  "scale": ["Strongly dislike", "Dislike", "Unsure", "Like", "Strongly like"],
+  "dimensions": [
+    { "id": "r", "name": "Realistic", "description": "Hands-on, practical, physical work with tools, machines, or the outdoors." },
+    { "id": "i", "name": "Investigative", "description": "Analyzing, researching, solving abstract or scientific problems." },
+    { "id": "a", "name": "Artistic", "description": "Creating, designing, expressing; unstructured, original work." },
+    { "id": "s", "name": "Social", "description": "Helping, teaching, advising, working closely with people." },
+    { "id": "e", "name": "Enterprising", "description": "Leading, persuading, selling, starting and running things." },
+    { "id": "c", "name": "Conventional", "description": "Organizing, following procedures, working with data and detail." }
+  ],
+  "items": [
+    { "id": "r1", "dimension": "r", "text": "Repair or build something mechanical or electronic." },
+    { "id": "r2", "dimension": "r", "text": "Set up and operate machines or equipment." },
+    { "id": "r3", "dimension": "r", "text": "Work outdoors or with your hands for most of the day." },
+    { "id": "r4", "dimension": "r", "text": "Assemble a physical prototype from parts." },
+    { "id": "r5", "dimension": "r", "text": "Diagnose why a device or system stopped working." },
+
+    { "id": "i1", "dimension": "i", "text": "Investigate the root cause of a hard, ambiguous problem." },
+    { "id": "i2", "dimension": "i", "text": "Design an experiment to test an idea." },
+    { "id": "i3", "dimension": "i", "text": "Analyze data to find a pattern others missed." },
+    { "id": "i4", "dimension": "i", "text": "Read deeply about how something works, for its own sake." },
+    { "id": "i5", "dimension": "i", "text": "Model or simulate a system before building it." },
+
+    { "id": "a1", "dimension": "a", "text": "Create an original design, story, or piece of art." },
+    { "id": "a2", "dimension": "a", "text": "Work on open-ended problems with no single right answer." },
+    { "id": "a3", "dimension": "a", "text": "Improvise a new approach rather than follow a template." },
+    { "id": "a4", "dimension": "a", "text": "Craft how something looks, sounds, or reads." },
+    { "id": "a5", "dimension": "a", "text": "Express an idea in an unconventional format." },
+
+    { "id": "s1", "dimension": "s", "text": "Teach or explain something to help someone learn." },
+    { "id": "s2", "dimension": "s", "text": "Coach or mentor someone toward a goal." },
+    { "id": "s3", "dimension": "s", "text": "Resolve a disagreement between people." },
+    { "id": "s4", "dimension": "s", "text": "Spend the day working closely alongside others." },
+    { "id": "s5", "dimension": "s", "text": "Support someone through a difficult situation." },
+
+    { "id": "e1", "dimension": "e", "text": "Persuade people to adopt your idea or plan." },
+    { "id": "e2", "dimension": "e", "text": "Lead a team toward an ambitious target." },
+    { "id": "e3", "dimension": "e", "text": "Start something new and own its outcome." },
+    { "id": "e4", "dimension": "e", "text": "Negotiate a deal or pitch to decision-makers." },
+    { "id": "e5", "dimension": "e", "text": "Take a calculated risk for a bigger payoff." },
+
+    { "id": "c1", "dimension": "c", "text": "Organize information into a clear, reliable system." },
+    { "id": "c2", "dimension": "c", "text": "Follow a precise procedure to get things exactly right." },
+    { "id": "c3", "dimension": "c", "text": "Keep detailed records accurate and up to date." },
+    { "id": "c4", "dimension": "c", "text": "Check work carefully for errors and inconsistencies." },
+    { "id": "c5", "dimension": "c", "text": "Build a repeatable process for a recurring task." }
+  ]
+}
